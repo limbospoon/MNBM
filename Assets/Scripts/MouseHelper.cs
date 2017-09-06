@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class MouseHelper : MonoBehaviour
 {
+    public static MouseHelper Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
     /// <summary>
     /// Gets the mouse position in world space
     /// </summary>
     /// <returns></returns>
-    public static Vector3 GetMousePosition()
+    public Vector3 GetMousePosition()
     {
         Vector3 MouseInWorldSpace = new Vector3();
-        Camera cam = Camera.main;
-        Event e = Event.current;
-        Vector2 MousePosition = new Vector2();
+        Plane playerPlane = new Plane(Vector3.up, transform.position);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        MousePosition.x = e.mousePosition.x;
-        MousePosition.y = cam.pixelHeight - e.mousePosition.y;
+        float hitdist = 0.0f;
 
-        MouseInWorldSpace = cam.ScreenToWorldPoint(new Vector3(MousePosition.x, MousePosition.y, cam.nearClipPlane));
+        if(playerPlane.Raycast(ray, out hitdist))
+        {
+            MouseInWorldSpace = ray.GetPoint(hitdist);
+        }
 
         return MouseInWorldSpace;
-
     }
 }
