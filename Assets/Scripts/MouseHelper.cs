@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TwinStickController : MonoBehaviour
+public class MouseHelper : MonoBehaviour
 {
-    void LookAtMouse(float Speed)
+    public static void GetMousePosition()
     {
 
     }
