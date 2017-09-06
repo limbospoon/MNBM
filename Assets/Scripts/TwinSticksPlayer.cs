@@ -23,7 +23,13 @@ public class TwinSticksPlayer : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        stickController.LookAtMouse(RotateSpeed);
-        stickController.Move(characterController, MoveSpeed);
+        //stickController.LookAtMouse(RotateSpeed);
+        //stickController.MoveKeyboard(characterController, MoveSpeed);
+
+        if (Input.GetAxisRaw("Vertical Right") != 0 || Input.GetAxisRaw("Horizontal Right") != 0)
+        {
+            stickController.ControllerLook(RotateSpeed);
+        }
+        stickController.MoveController(characterController, MoveSpeed);
     }
 }
