@@ -6,6 +6,6 @@ public class TwinStickController : MonoBehaviour
 {
     void LookAtMouse(float Speed)
     {
-
+        Debug.Log(MouseHelper.GetMousePosition());
     }
 }
