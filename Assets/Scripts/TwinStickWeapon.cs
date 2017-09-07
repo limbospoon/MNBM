@@ -6,6 +6,7 @@ public class TwinStickWeapon : MonoBehaviour
 {
     public Rigidbody projectile;
     public Transform projectileSpawnPoint;
+
     public float fireRate = 0.3f;
 
     private float lastFireTime = 0;

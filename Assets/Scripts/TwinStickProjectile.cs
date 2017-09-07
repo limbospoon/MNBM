@@ -6,22 +6,28 @@ public class TwinStickProjectile : MonoBehaviour
 {
     public Rigidbody rigidbody;
 
-    private float speed = 50f;
-
-    public float Speed
-    {
-        get { return speed; }
-        set { Speed = value; }
-    }
-
+    public float Speed = 1f;
+    public float Damage = 1f;
+    
 	// Use this for initialization
-	void Start ()
+	void Awake ()
     {
         rigidbody = GetComponent<Rigidbody>();
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.collider.tag == "Enemy")
+        {
+            other.collider.GetComponent<TwinStickMonster>().TakeDamage(Damage);
+        }
+
+        Debug.Log("I hit " + other.collider.name);
+        Destroy(this.gameObject);
+    }
+
+    // Update is called once per frame
+    void FixedUpdate ()
     {
         rigidbody.AddForce(transform.forward * Speed * Time.fixedDeltaTime, ForceMode.Impulse);
         Destroy(this.gameObject, 1.2f);
