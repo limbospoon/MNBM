@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TwinStickWeapon : MonoBehaviour
-{
-    
+public class TwinStickProjectile : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
