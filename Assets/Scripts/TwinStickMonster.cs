@@ -28,9 +28,20 @@ public class TwinStickMonster : MonoBehaviour
     public void MoveToPlayer()
     {
         Vector3 target = playerReference.transform.position;
-        
-        navMeshAgent.destination = target;
-        //navMeshAgent.isStopped = true;
+        Quaternion RotateTo = Quaternion.LookRotation(target - transform.position);
+        RotateTo.x = 0;
+        RotateTo.z = 0;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, RotateTo,50 * Time.fixedDeltaTime);
+        if(Vector3.Distance(transform.position, target) < 2.5f)
+        {
+            navMeshAgent.isStopped = true;
+        }
+        else
+        {
+            navMeshAgent.destination = target;
+            navMeshAgent.isStopped = false;
+        }
     }
 
     public void TakeDamage(float damage)
