@@ -16,19 +16,12 @@ public class TwinSticksPlayer : MonoBehaviour
     protected TwinStickController stickController;
     [SerializeField]
     protected TwinStickWeapon stickWeapon;
- 
-    
-	// Use this for initialization
-	void Start ()
-    {
-		
-	}
 	
     void Update()
     {
         if(bUsingGamepad)
         {
-            if(Input.GetAxis("Joy Triggers") > 0)
+            if(Input.GetAxis("Joy Triggers") < 0)
             {
                 stickWeapon.Fire();
             }
@@ -40,12 +33,8 @@ public class TwinSticksPlayer : MonoBehaviour
                 stickWeapon.Fire();
             }
         }
-    }
 
-	// Update is called once per frame
-	void FixedUpdate ()
-    {
-        if(bUsingGamepad)
+        if (bUsingGamepad)
         {
             if (Input.GetAxisRaw("Vertical Right") != 0 || Input.GetAxisRaw("Horizontal Right") != 0)
             {
@@ -59,5 +48,6 @@ public class TwinSticksPlayer : MonoBehaviour
             stickController.LookAtMouse(RotateSpeed);
             stickController.MoveKeyboard(characterController, MoveSpeed);
         }
+
     }
 }

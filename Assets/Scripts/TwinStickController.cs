@@ -16,7 +16,8 @@ public class TwinStickController : MonoBehaviour
 
     public void ControllerLook(float Speed)
     {
-        Vector3 Target = new Vector3(Input.GetAxis("Horizontal Right"), 0, Input.GetAxis("Vertical Right"));
+        Vector3 StickDirection = new Vector3(Input.GetAxis("Horizontal Right"), 0, Input.GetAxis("Vertical Right"));
+        Vector3 Target = transform.position + StickDirection;
         Quaternion RotateTo = Quaternion.LookRotation(Target - transform.position);
         RotateTo.x = 0;
         RotateTo.z = 0;
@@ -29,10 +30,15 @@ public class TwinStickController : MonoBehaviour
         float AxisValueH = Input.GetAxis("Horizontal");
         float AxisValueV = Input.GetAxis("Vertical");
         
-        Vector3 desiredPosition = new Vector3(AxisValueH, 0, AxisValueV);
-        desiredPosition = desiredPosition.normalized * Speed * Time.fixedDeltaTime;
-        
-        charController.SimpleMove(desiredPosition);
+        Vector3 desiredDirection = new Vector3(AxisValueH, 0, AxisValueV);
+        desiredDirection *= Speed;
+
+        if(AxisValueH != 0 && AxisValueV != 0)
+        {
+            desiredDirection = desiredDirection * 0.75f;
+        }
+
+        charController.Move(desiredDirection * Time.deltaTime);
     }
 
     public void MoveController(CharacterController charController, float Speed)
@@ -40,9 +46,14 @@ public class TwinStickController : MonoBehaviour
         float AxisValueH = Input.GetAxis("Joy Horizontal");
         float AxisValueV = Input.GetAxis("Joy Vertical");
 
-        Vector3 desiredPosition = new Vector3(AxisValueH, 0, AxisValueV);
-        desiredPosition = desiredPosition.normalized * Speed * Time.fixedDeltaTime;
+        Vector3 desiredDirection = new Vector3(AxisValueH, 0, AxisValueV);
+        desiredDirection *= Speed;
 
-        charController.SimpleMove(desiredPosition);
+        if (AxisValueH != 0 && AxisValueV != 0)
+        {
+            desiredDirection = desiredDirection * 0.75f;
+        }
+
+        charController.Move(desiredDirection * Time.deltaTime);
     }
 }
