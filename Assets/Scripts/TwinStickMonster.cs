@@ -14,15 +14,15 @@ public class TwinStickMonster : MonoBehaviour
 
     void Awake()
     {
-        if(navMeshAgent == null)
+        /*if(navMeshAgent == null)
         {
             Debug.LogError("No NavMeshAgent found!!!");
-        }
+        }*/
     }
 
-    void Update()
+    public void Idle()
     {
-        MoveToPlayer();
+        Debug.Log("Idling");
     }
 
     public void MoveToPlayer()
