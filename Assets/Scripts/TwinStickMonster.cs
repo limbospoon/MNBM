@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
+using System.Linq;
+
+public enum MonsterState
+{
+    MoveToObjective = 0
+}
 
 public class TwinStickMonster : MonoBehaviour
 {
@@ -15,6 +21,15 @@ public class TwinStickMonster : MonoBehaviour
 
     public StateMachine stateMachine = new StateMachine();
 
+    public MonsterState monsterState = MonsterState.MoveToObjective;
+
+    Dictionary<IState, int> monsterStates = new Dictionary<IState, int>();
+
+    void Setup()
+    {
+        monsterStates.Add(new MovingToObjectiveState(this), 0);
+    }
+
     void Awake()
     {
         /*if(navMeshAgent == null)
@@ -22,6 +37,8 @@ public class TwinStickMonster : MonoBehaviour
             Debug.LogError("No NavMeshAgent found!!!");
             return;
         }*/
+        Setup();
+        Debug.Log(monsterStates.FirstOrDefault(x => x.Value == (int)MonsterState.MoveToObjective));
     }
 
     public void MoveToPlayer()
