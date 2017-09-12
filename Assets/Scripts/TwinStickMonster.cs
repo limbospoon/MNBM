@@ -10,19 +10,18 @@ public class TwinStickMonster : MonoBehaviour
 
     public NavMeshAgent navMeshAgent;
 
-    public GameObject playerReference;
+    public TwinSticksPlayer playerReference;
+    public Transform objective;
+
+    public StateMachine stateMachine = new StateMachine();
 
     void Awake()
     {
         /*if(navMeshAgent == null)
         {
             Debug.LogError("No NavMeshAgent found!!!");
+            return;
         }*/
-    }
-
-    public void Idle()
-    {
-        Debug.Log("Idling");
     }
 
     public void MoveToPlayer()
@@ -36,6 +35,26 @@ public class TwinStickMonster : MonoBehaviour
         if(Vector3.Distance(transform.position, target) < 2.5f)
         {
             navMeshAgent.isStopped = true;
+        }
+        else
+        {
+            navMeshAgent.destination = target;
+            navMeshAgent.isStopped = false;
+        }
+    }
+
+    public void MoveToTarget()
+    {
+        Vector3 target = objective.position;
+        Quaternion RotateTo = Quaternion.LookRotation(target - transform.position);
+        RotateTo.x = 0;
+        RotateTo.z = 0;
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, RotateTo, 50 * Time.fixedDeltaTime);
+        if (Vector3.Distance(transform.position, target) < 2.5f)
+        {
+            navMeshAgent.isStopped = true;
+            //stateMachine.ChangeState();
         }
         else
         {
